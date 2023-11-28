@@ -1,113 +1,105 @@
-import Image from 'next/image'
-
+"use client";
+import { useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function Home() {
+  const router = useRouter();
+
+  const goToHome = () => {
+    router.push("/access");
+  };
+  useEffect(() => {
+    const storedData = localStorage.getItem("user");
+    if (storedData) {
+      const parsedData: any = JSON.parse(storedData);
+      if (parsedData?.Nome.length > 0) {
+        goToHome();
+      }
+    }
+  }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
+    <main className="h-screen bg-slate-200">
+      <div id="topbar" className="flex justify-center  w-full fixed z-10">
+        <div className="flex shadow-xl w-full p-4 md:mx-10 mt-5 md:rounded-xl bg-slate-200">
+          <div className="hidden  text-white font-semibold md:flex w-full">
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              src={"/logo.png"}
+              alt={"HealthSync"}
+              width={200}
+              height={100}
             />
-          </a>
+          </div>
+          <nav className="flex gap-3 flex-row w-3/5  items-center">
+            <a href="#sobrenos">
+              <button className="border-b-2 transition-all ease-out hover:opacity-70 hover:border-b-2 hover:border-black active:text-green-600 active:border-green-600">
+                Marcar Consulta
+              </button>
+            </a>
+            <a href="#sobrenos">
+              <button className="border-b-2 transition-all ease-out hover:opacity-70 hover:border-b-2 hover:border-black active:text-green-600 active:border-green-600">
+                {" "}
+                Trabalhe Conosco
+              </button>
+            </a>
+            <a href="#sobrenos">
+              <button className="border-b-2 transition-all ease-out hover:opacity-70 hover:border-b-2 hover:border-black active:text-green-600 active:border-green-600">
+                {" "}
+                Sobre Nós
+              </button>
+            </a>
+            <a href="" className="select-none">
+              <div className="flex items-center">|</div>
+            </a>
+            <Link href="/register">
+              <button className="text-green-600 hover:text-green-800">
+                {" "}
+                Fazer Cadastro
+              </button>
+            </Link>
+            <Link href="/login">
+              <button className="bg-green-600 p-2 rounded-lg text-white hover:bg-green-800">
+                {" "}
+                Entrar
+              </button>
+            </Link>
+          </nav>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div
+        id="agendamento"
+        className="flex w-full  bg-slate-200 pt-46 justify-center overflow-x-hidden"
+      >
+        <div className=" w-full">
+          <div className="pt-60 text-black text-4xl text-center h-auto ">
+            <div>Agende a sua consulta agora!</div>
+            <Link href="/register/quick">
+              <button className="bg-green-600 p-2 rounded-lg text-white text-xl mt-10 hover:bg-green-800">
+                Agendar
+              </button>
+            </Link>
+          </div>
+          <svg
+            className="bg-blue"
+            xmlns="http://www.w3.org/2000/svg"
+            id="visual"
+            viewBox="0 200 1920 100"
+            width="100%"
+            height="150"
+            version="1.1"
+          >
+            <path
+              d="M0 302L32 305.5C64 309 128 316 192 312.3C256 308.7 320 294.3 384 285.3C448 276.3 512 272.7 576 280.2C640 287.7 704 306.3 768 308.5C832 310.7 896 296.3 960 287.5C1024 278.7 1088 275.3 1152 274C1216 272.7 1280 273.3 1344 274C1408 274.7 1472 275.3 1536 281.7C1600 288 1664 300 1728 303.8C1792 307.7 1856 303.3 1888 301.2L1920 299L1920 401L1888 401C1856 401 1792 401 1728 401C1664 401 1600 401 1536 401C1472 401 1408 401 1344 401C1280 401 1216 401 1152 401C1088 401 1024 401 960 401C896 401 832 401 768 401C704 401 640 401 576 401C512 401 448 401 384 401C320 401 256 401 192 401C128 401 64 401 32 401L0 401Z"
+              fill="#16a34a"
+            />
+          </svg>
+        </div>
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="bg-green-600 h-3/6">
+        <div className="pt-96" id="sobrenos">
+          Sobre nos
+        </div>
       </div>
     </main>
-  )
+  );
 }
